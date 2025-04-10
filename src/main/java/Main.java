@@ -13,6 +13,7 @@ public class Main {
     public static void main(String[] args) {
 
         process();
+        System.out.println("Bye...");
 
     }
 
@@ -20,16 +21,18 @@ public class Main {
 
         loadInitValues();
 
-        int answer = 0;
         MnuOptMain idMenu = null;
 
         do {
             MnuOptMain.viewMenu();
-            answer = Utils.valueInt("");
+            int answer = Utils.valueInt("");
             try {
                 idMenu = MnuOptMain.values()[answer - 1];
                 switch (idMenu) {
-                    case EXIT -> System.out.println("Bye...");
+                    case EXIT -> {
+                        Utils.closeScanner();
+                        return;
+                    }
                     case AUTOMATIC -> automatic();
                     case EDITOR_CRE -> editorCreate();
                     default -> {
@@ -40,14 +43,10 @@ public class Main {
                         }
                     }
                 }
-
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Error: The value is wrong.");
             }
-
-        } while (idMenu != MnuOptMain.EXIT);
-
-        Utils.closeScanner();
+        } while (true);
     }
 
     private static void menu(MnuOptMain idMenu) {
@@ -58,7 +57,6 @@ public class Main {
             case NEWS_LIST -> newsList();
             case EDITOR_SAL -> editorIntroSalary();
             case NEWS_MNGMT -> newsMngm();
-
             default -> System.out.println("Error: The value is wrong.");
         }
     }
@@ -84,20 +82,18 @@ public class Main {
         System.out.println(System.lineSeparator() + "MANAGEMENT NEWS.................." + System.lineSeparator());
 
         editorsListNum();
-        int id = 0;
-        boolean exit = false;
+
         do {
-            id = Utils.valueInt("Type editor's id: ") - 1;
+            int id = Utils.valueInt("Type editor's id: ") - 1;
 
             if (id >= 0 && id < editors.size()) {
                 MnuOptNewsMain menu = new MnuOptNewsMain(editors.get(id));
-                exit = true;
+                return;
             } else {
                 System.out.println("The editor's id is wrong.");
             }
-        } while (!exit);
+        } while (true);
     }
-
 
     private static void automatic() {
         editors = Test.editorsLoad();
@@ -176,7 +172,6 @@ public class Main {
                     System.out.println(Utils.formatToChars(e.getName(), 16) + " \t " + MnuOptNewsMain.makeLineNews(n.listNews()));
                 }
             }
-
         }
     }
 

@@ -28,6 +28,9 @@ public class MnuOptNewsMain {
             try {
                 option = MnuOptNews.values()[resp - 1];
                 switch (option) {
+                    case EXIT -> {
+                        return;
+                    }
                     case NEWS_CRE_SO -> newsCreate(Sport.SOCCER);
                     case NEWS_CRE_BA -> newsCreate(Sport.BASKETBALL);
                     case NEWS_CRE_TE -> newsCreate(Sport.TENNIS);
@@ -43,7 +46,7 @@ public class MnuOptNewsMain {
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("Error: The value is wrong.");
             }
-        } while (option != MnuOptNews.EXIT);
+        } while (true);
     }
 
     private static void newsCreate(Sport sport) {

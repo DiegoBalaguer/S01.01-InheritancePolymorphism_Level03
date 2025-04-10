@@ -38,7 +38,7 @@ public class Utils {
 
     private static Scanner sc = new Scanner(System.in);
 
-    protected static void closeScanner() {
+    public static void closeScanner() {
         sc.close();
     }
 
